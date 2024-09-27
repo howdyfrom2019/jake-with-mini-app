@@ -1,4 +1,3 @@
-import type { Liff } from "@line/liff";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -20,12 +19,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  liff,
-  liffError,
   children,
 }: Readonly<{
-  liff: Liff | null;
-  liffError: string | null;
   children: React.ReactNode;
 }>) {
   return (
@@ -34,7 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <main>
-          {liff && <p>LIFF init succeeded.</p>}
+          {/* {liff && <p>LIFF init succeeded.</p>}
           {liffError && (
             <>
               <p>LIFF init failed.</p>
@@ -42,7 +37,7 @@ export default function RootLayout({
                 <code>{liffError}</code>
               </p>
             </>
-          )}
+          )} */}
           {children}
         </main>
       </body>
