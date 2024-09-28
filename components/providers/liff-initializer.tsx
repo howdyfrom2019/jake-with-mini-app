@@ -28,5 +28,13 @@ export default function LiffInitializer() {
       });
   }, []);
 
-  return <></>;
+  return (
+    <>
+      {liffError && (
+        <div>
+          liff error occured: <code>{JSON.stringify(liffError, null, 2)}</code>
+        </div>
+      )}
+    </>
+  );
 }
