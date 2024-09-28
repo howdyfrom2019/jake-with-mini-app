@@ -1,10 +1,11 @@
 "use client";
 
-import { Liff } from "@line/liff";
+import { liffState } from "@/states/liff";
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
-export default function LiffExample() {
-  const [liffObject, setLiffObject] = useState<Liff | null>(null);
+export default function LiffInitializer() {
+  const setLiff = useSetRecoilState(liffState);
   const [liffError, setLiffError] = useState<string | null>(null);
 
   // Execute liff.init() when the app is initialized
@@ -18,7 +19,7 @@ export default function LiffExample() {
           .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! })
           .then(() => {
             console.log("LIFF init succeeded.");
-            setLiffObject(liff);
+            setLiff(liff);
           })
           .catch((error: Error) => {
             console.log("LIFF init failed.");
@@ -27,14 +28,5 @@ export default function LiffExample() {
       });
   }, []);
 
-  return (
-    <div>
-      {liffObject && (
-        <div>
-          liff created: <code>{JSON.stringify(liffObject, null, 2)}</code>
-        </div>
-      )}
-      {liffError && <code>{JSON.stringify(liffError, null, 2)}</code>}
-    </div>
-  );
+  return <></>;
 }

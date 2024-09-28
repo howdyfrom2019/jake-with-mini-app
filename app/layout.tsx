@@ -1,3 +1,4 @@
+import Providers from "@/components/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -28,18 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main>
-          {/* {liff && <p>LIFF init succeeded.</p>}
-          {liffError && (
-            <>
-              <p>LIFF init failed.</p>
-              <p>
-                <code>{liffError}</code>
-              </p>
-            </>
-          )} */}
-          {children}
-        </main>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
