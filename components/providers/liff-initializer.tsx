@@ -9,19 +9,34 @@ export default function LiffInitializer() {
   const setLiff = useSetRecoilState(liffState);
   const [liffError, setLiffError] = useState<string | null>(null);
 
+  const initLiff = async () => {
+    try {
+      await liff.init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! });
+      console.log("LIFF init succeeded");
+      setLiff(liff);
+      liff
+        .sendMessages([
+          {
+            type: "text",
+            text: "Hello, World!",
+          },
+        ])
+        .then(() => {
+          console.log("message sent");
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+    } catch (e) {
+      const error = e as Error;
+      console.log("LIFF init failed", error);
+      setLiffError(error.toString());
+    }
+  };
   // Execute liff.init() when the app is initialized
   useEffect(() => {
     // to avoid `window is not defined` error
-    liff
-      .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! })
-      .then(() => {
-        console.log("LIFF init succeeded.");
-        setLiff(liff);
-      })
-      .catch((error: Error) => {
-        console.log("LIFF init failed.");
-        setLiffError(error.toString());
-      });
+    initLiff();
   }, []);
 
   return (
