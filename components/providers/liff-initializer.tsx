@@ -1,7 +1,8 @@
 "use client";
 
 import { liffState } from "@/states/liff";
-import { useEffect, useState } from "react";
+import liff from "@line/liff";
+import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
 export default function LiffInitializer() {
@@ -11,30 +12,25 @@ export default function LiffInitializer() {
   // Execute liff.init() when the app is initialized
   useEffect(() => {
     // to avoid `window is not defined` error
-    import("@line/liff")
-      .then((liff) => liff.default)
-      .then((liff) => {
-        console.log("LIFF init...");
-        liff
-          .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! })
-          .then(() => {
-            console.log("LIFF init succeeded.");
-            setLiff(liff);
-          })
-          .catch((error: Error) => {
-            console.log("LIFF init failed.");
-            setLiffError(error.toString());
-          });
+    liff
+      .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! })
+      .then(() => {
+        console.log("LIFF init succeeded.");
+        setLiff(liff);
+      })
+      .catch((error: Error) => {
+        console.log("LIFF init failed.");
+        setLiffError(error.toString());
       });
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       {liffError && (
         <div>
           liff error occured: <code>{JSON.stringify(liffError, null, 2)}</code>
         </div>
       )}
-    </>
+    </React.Fragment>
   );
 }
